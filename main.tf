@@ -60,9 +60,9 @@ resource "aws_subnet" "database_subnet_2" {
     Name = var.database_subnet_tag_2
   } 
 }   
-################################################################
+#######################################################################
 # Public Route Table
-################################################################
+#######################################################################
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.myVPC.id
   tags = {
@@ -104,36 +104,111 @@ resource "aws_route_table_association" "database_subnet_2_association" {
   subnet_id      = aws_subnet.database_subnet_2.id
   route_table_id = aws_route_table.database_rt.id
 }
-############################################################################
-# Security Group for Public Subnet
-############################################################################
-resource "aws_security_group" "public_sg" {
-  name        = var.public_sg_name
-  description = "Security group for public subnet"
-  vpc_id      = aws_vpc.myVPC.id
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = null
-    prefix_list_ids = null  
-    security_groups = null
-    self = null
-  }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = null
-      description      = "Outbound rule"
-      prefix_list_ids  = null
-      security_groups  = null
-      self             = null
-  }
+########################################################################################
+# AWS SECURITY GROUP
+########################################################################################
 
+resource "aws_security_group" "our-security-group" { # This will create security group in vpc
+  name        = "Our-Security-Group" # name for security group
+  description = "Our Security Group" # description for SG
+  vpc_id      = aws_vpc.myVPC.id # Vpc in which this SG will be created
   tags = {
-    Name = var.public_sg_tag
+    Name        = "Our-Security-Group" # Tags for security group
+    Environment = var.environment # Environment for the security group
+  }
+  ingress {  # This is for inbound rules in SG
+    from_port   = 22 # This is syntax to open port 22
+    to_port     = 22
+    protocol    = "tcp" # its using SSH but we specify TCP here 
+    cidr_blocks = ["0.0.0.0/0"] # To allow traffic from anywhere IPV4
+  }
+  ingress { 
+    from_port   = 80  # This is syntax to open port 80
+    to_port     = 80
+    protocol    = "tcp" # its using HTTP but we specify TCP here
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+  ingress {
+    from_port   = 8080 # This is syntax to open port 8080
+    to_port     = 8080
+    protocol    = "tcp" 
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {  # This is syntax to open ports for outbound traffic
+    from_port   = 0 # we are allowing all traffic for outbound
+    to_port     = 0 # we are allowing all traffic for outbound
+    protocol    = "-1" # all Protocols
+    cidr_blocks = ["0.0.0.0/0"] # anywhere ipv4
+    ipv6_cidr_blocks = ["::/0"] # anywhere ipv6
+  }
+}
+
+resource "aws_security_group" "our-security-group-for-nexus" { # This will create security group in vpc
+  name        = "Our-Security-Group-for-nexus" # name for security group
+  description = "Our Security Group" # description for SG
+  vpc_id      = aws_vpc.myVPC.id # Vpc in which this SG will be created
+  tags = {
+    Name        = "Our-Security-Group-for-nexus" # Tags for security group
+    Environment = var.environment # Environment for the security group
+  }
+  ingress {  # This is for inbound rules in SG
+    from_port   = 22 # This is syntax to open port 22
+    to_port     = 22
+    protocol    = "tcp" # its using SSH but we specify TCP here 
+    cidr_blocks = ["0.0.0.0/0"] # To allow traffic from anywhere IPV4
+  }
+  ingress { 
+    from_port   = 80  # This is syntax to open port 80
+    to_port     = 80
+    protocol    = "tcp" # its using HTTP but we specify TCP here
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+  ingress {
+    from_port   = 8081 # This is syntax to open port 8080
+    to_port     = 8081
+    protocol    = "tcp" 
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {  # This is syntax to open ports for outbound traffic
+    from_port   = 0 # we are allowing all traffic for outbound
+    to_port     = 0 # we are allowing all traffic for outbound
+    protocol    = "-1" # all Protocols
+    cidr_blocks = ["0.0.0.0/0"] # anywhere ipv4
+    ipv6_cidr_blocks = ["::/0"] # anywhere ipv6
+  }
+}
+
+resource "aws_security_group" "our-Security-Group-for-sonar" { # This will create security group in vpc
+  name        = "OOur-Security-Group-for-sonar" # name for security group
+  description = "Our Security Group" # description for SG
+  vpc_id      = aws_vpc.myVPC.id # Vpc in which this SG will be created
+  tags = {
+    Name        = "Our-Security-Group-for-sonar" # Tags for security group
+    Environment = var.environment # Environment for the security group
+  }
+  ingress {  # This is for inbound rules in SG
+    from_port   = 22 # This is syntax to open port 22
+    to_port     = 22
+    protocol    = "tcp" # its using SSH but we specify TCP here 
+    cidr_blocks = ["0.0.0.0/0"] # To allow traffic from anywhere IPV4
+  }
+  ingress { 
+    from_port   = 80  # This is syntax to open port 80
+    to_port     = 80
+    protocol    = "tcp" # its using HTTP but we specify TCP here
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+  ingress {
+    from_port   = 9000 # This is syntax to open port 8080
+    to_port     = 9000
+    protocol    = "tcp" 
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {  # This is syntax to open ports for outbound traffic
+    from_port   = 0 # we are allowing all traffic for outbound
+    to_port     = 0 # we are allowing all traffic for outbound
+    protocol    = "-1" # all Protocols
+    cidr_blocks = ["0.0.0.0/0"] # anywhere ipv4
+    ipv6_cidr_blocks = ["::/0"] # anywhere ipv6
   }
 }

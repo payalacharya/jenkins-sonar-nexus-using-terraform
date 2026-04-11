@@ -94,3 +94,24 @@ variable "public_sg_name" {
   type        = string
   default     = "tcw_public_sg"
 }
+variable "ami_id" {
+  description = "AMI ID for the EC2 instance"
+  type        = string
+  default     = "ami-0ec10929233384c7f"  # Ubuntu 22.04 in us-east-1
+}
+variable "instance_type" {
+  description = "Instance type for the EC2 instance"
+  type        = string
+  default     = "t3.micro"
+}
+variable "key_name" {
+  description = "Key pair name for SSH access"
+  type        = string
+  default     = "NewKey1"
+}
+
+variable "environment" {
+  description = "Deployment environment"
+  type        = string
+  default     = "dev"
+}
