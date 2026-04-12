@@ -107,19 +107,19 @@ variable "ami_id" {
 variable "jenkins_instance_type" {
   description = "Instance type for the Jenkins server"
   type        = string
-  default     = "t3.micro"  # 2 vCPU, 4GB RAM
+  default     = "t3.micro"  # 2 vCPU, 1 RAM
 }
 
 variable "nexus_instance_type" {
   description = "Instance type for the Nexus server"
   type        = string
-  default     = "t3.small"  # 2 vCPU, 4GB RAM — no swap needed
+  default     = "t3.small"  # 2 vCPU, 2GB RAM
 }
 
 variable "sonar_instance_type" {
   description = "Instance type for the SonarQube server"
   type        = string
-  default     = "c7i-flex.large"   # 2 vCPU, 8GB RAM — no swap needed
+  default     = "c7i-flex.large"   # 2 vCPU, 4GB RAM
 }
 variable "key_name" {
   description = "Key pair name for SSH access"
