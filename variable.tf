@@ -99,11 +99,6 @@ variable "ami_id" {
   type        = string
   default     = "ami-0ec10929233384c7f"  # Ubuntu 22.04 in us-east-1
 }
-# Per-server instance types — sized for each tool's actual memory needs
-# Jenkins: t3.medium = 2 vCPU, 4GB RAM  (build jobs need headroom)
-# Nexus:   t3.medium = 2 vCPU, 4GB RAM  (artifact storage + JVM)
-# Sonar:   t3.large  = 2 vCPU, 8GB RAM  (Elasticsearch inside needs 4GB+)
-
 variable "jenkins_instance_type" {
   description = "Instance type for the Jenkins server"
   type        = string
