@@ -209,6 +209,6 @@ resource "aws_security_group" "our-Security-Group-for-sonar" { # This will creat
     to_port     = 0 # we are allowing all traffic for outbound
     protocol    = "-1" # all Protocols
     cidr_blocks = ["0.0.0.0/0"] # anywhere ipv4
-    ipv6_cidr_blocks = ["::/0"] # anywhere ipv6
+    ipv6_cidr_blocks = ["::/0"] # # Allow HTTPS from ANY IPv6 address
   }
 }

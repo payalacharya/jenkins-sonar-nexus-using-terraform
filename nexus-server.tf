@@ -1,7 +1,7 @@
 resource "aws_instance" "nexus_server" {
   # create a Nexus server instance in the existing VPC
-  ami           = data.aws_ami.latest.id # dynamically fetched: latest Ubuntu 22.04 LTS
-  instance_type = var.instance_type
+  ami           = data.aws_ami.latest.id # dynamically fetched: latest Ubuntu 22.04 LTS  
+  instance_type = var.nexus_instance_type
   subnet_id     = aws_subnet.public_subnet_1.id
   user_data     = file("./nexus-server.sh")
   key_name      = var.key_name
