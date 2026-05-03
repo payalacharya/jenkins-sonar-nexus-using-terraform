@@ -1,6 +1,6 @@
 
 resource "aws_iam_role" "our-iam-role" {
-    name = "Terraform-Admin"
+    name_prefix = "terraform-admin-"
     assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -26,7 +26,7 @@ resource "aws_iam_role_policy_attachment" "ec2-policy" {
 }
 
 resource "aws_iam_instance_profile" "our-instance-profile" {
-    name = "jenkins-instance-profile"
+    name_prefix = "jenkins-instance-profile-"
     role = aws_iam_role.our-iam-role.name
    # role = data.aws_iam_roles.my-available-role.name
   

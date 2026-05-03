@@ -102,13 +102,13 @@ variable "ami_id" {
 variable "jenkins_instance_type" {
   description = "Instance type for the Jenkins server"
   type        = string
-  default     = "t3.micro"  # 2 vCPU, 1 RAM
+  default     = "c7i-flex.large"  # 2 vCPU, 2GB RAM
 }
 
 variable "nexus_instance_type" {
   description = "Instance type for the Nexus server"
   type        = string
-  default     = "t3.small"  # 2 vCPU, 2GB RAM
+  default     = "c7i-flex.large"   # 2 vCPU, 2GB RAM
 }
 
 variable "sonar_instance_type" {
