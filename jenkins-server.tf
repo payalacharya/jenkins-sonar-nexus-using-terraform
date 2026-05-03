@@ -1,6 +1,6 @@
 resource "aws_instance" "jenkins-server" {   # we are creating a new instance for jenkins-server
     ami = data.aws_ami.latest.id    # dynamically fetched: latest Ubuntu 22.04 LTS
-    instance_type = variable.jenkins_instance_type    # This is the type of the instance we are creating
+    instance_type = var.jenkins_instance_type    # This is the type of the instance we are creating
     subnet_id = aws_subnet.public_subnet_1.id   # this is the id of the subnet we are using to launch the instance
     user_data = file("./jenkins-server.sh")  # this is the script that will be executed during the creation of the instance
     key_name = "NewKey1" # this is the key name that we have created in console
