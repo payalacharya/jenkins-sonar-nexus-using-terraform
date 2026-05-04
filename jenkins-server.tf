@@ -3,7 +3,7 @@ resource "aws_instance" "jenkins-server" {   # we are creating a new instance fo
     instance_type = var.jenkins_instance_type    # This is the type of the instance we are creating
     subnet_id = aws_subnet.public_subnet_1.id   # this is the id of the subnet we are using to launch the instance
     user_data = file("./jenkins-server.sh")  # this is the script that will be executed during the creation of the instance
-    key_name = var.region # this is the key name that we have created in console
+    key_name = var.key_name # this is the key name that we have created in console
     iam_instance_profile = aws_iam_instance_profile.our-instance-profile.name
     security_groups = [aws_security_group.our-security-group.id] # this is security grp in which we have openend ports
     root_block_device {
